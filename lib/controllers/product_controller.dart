@@ -6,7 +6,6 @@ class ProductController {
 
   Future<List<Product>> getProduct() async {
     List<Product> products = await productHttpServise.fetchProducts();
-    print(products);
     return products;
   }
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:online_shop/views/screens/category_screen.dart';
 import 'package:online_shop/views/screens/product_screen.dart';
+import 'package:online_shop/views/screens/users_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -48,12 +50,8 @@ class _HomeScreenState extends State<HomeScreen>
         controller: _tabController,
         children: [
           ProductScreen(),
-          const ListTile(
-            title: Text("Hello Dart"),
-          ),
-          const ListTile(
-            title: Text("Hi Flutter"),
-          ),
+          CategoriesScreen(),
+          UsersScreen(),
         ],
       ),
     );

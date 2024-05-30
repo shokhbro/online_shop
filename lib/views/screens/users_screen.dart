@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:gap/gap.dart';
-import 'package:online_shop/controllers/product_controller.dart';
+import 'package:online_shop/controllers/users_controller.dart';
 
-class ProductScreen extends StatelessWidget {
-  ProductScreen({super.key});
-  final productController = ProductController();
+class UsersScreen extends StatelessWidget {
+  UsersScreen({super.key});
+  final userContoller = UsersController();
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: productController.getProduct(),
+      future: userContoller.getUsers(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(
@@ -25,53 +26,77 @@ class ProductScreen extends StatelessWidget {
 
         if (snapshot.hasError) {
           return Center(
-            child: Text(snapshot.error.toString()),
+            child: Text(snapshot.hasError.toString()),
           );
         }
+        final users = snapshot.data;
 
-        final products = snapshot.data;
-
-        return products == null || products.isEmpty
+        return users == null || users.isEmpty
             ? const Center(
                 child: Text("Mahsulotlar mavjud emas!"),
               )
             : GridView.builder(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  mainAxisExtent: 300,
+                  mainAxisExtent: 350,
                   childAspectRatio: 0.75,
                 ),
-                itemCount: 20,
+                itemCount: 10,
                 itemBuilder: (ctx, index) {
-                  final product = products[index];
+                  final user = users[index];
                   return Card(
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Image.network(product.images[0]),
-                        const Gap(5),
+                        Image.network(user.avatar),
                         Row(
                           children: [
-                            const Gap(10),
+                            const Gap(5),
                             Text(
-                              "${product.price.toString()} \$",
+                              user.name,
                               style: const TextStyle(
                                 fontFamily: 'Lato',
+                                fontSize: 16,
                               ),
                             ),
                           ],
                         ),
                         Row(
                           children: [
-                            const Gap(10),
+                            const Gap(5),
+                            Text(
+                              user.role,
+                              style: const TextStyle(
+                                fontFamily: 'Lato',
+                                fontSize: 16,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const Gap(8),
+                        Row(
+                          children: [
+                            const Gap(5),
                             Expanded(
                               child: Text(
-                                product.title,
+                                "email: ${user.email}",
                                 style: const TextStyle(
                                   fontFamily: 'Lato',
-                                  fontSize: 14,
+                                  fontSize: 12,
                                 ),
                                 overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            const Gap(5),
+                            Text(
+                              "password:  ${user.password}",
+                              style: const TextStyle(
+                                fontFamily: 'Lato',
+                                fontSize: 12,
                               ),
                             ),
                           ],
@@ -79,24 +104,12 @@ class ProductScreen extends StatelessWidget {
                         const Gap(15),
                         Row(
                           children: [
-                            const Gap(10),
+                            const Gap(5),
                             Text(
-                              product.creationAt,
+                              user.creationAt,
                               style: const TextStyle(
                                 fontFamily: 'Lato',
-                                fontSize: 11,
-                              ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            const Gap(10),
-                            Text(
-                              product.updatedAt,
-                              style: const TextStyle(
-                                fontFamily: 'Lato',
-                                fontSize: 11,
+                                fontSize: 12,
                               ),
                             ),
                           ],
