@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:gap/gap.dart';
 import 'package:online_shop/controllers/users_controller.dart';
-
 class UsersScreen extends StatelessWidget {
   UsersScreen({super.key});
   final userContoller = UsersController();
